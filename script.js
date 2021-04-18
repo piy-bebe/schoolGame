@@ -4,8 +4,8 @@ var map = document.querySelector(".map");
 const block = document.querySelector(".block-item");
 
 //start in the middle of the map
-var x = 90;
-var y = 34;
+var x = 112;
+var y = 290;
 var held_directions = []; //State of which arrow keys we are holding down
 var speed = 0.7; //How fast the character moves in pixels per frame
 
@@ -34,9 +34,9 @@ const placeCharacter = () => {
 
   //Limits (gives the illusion of walls)
   var leftLimit = -8;
-  var rightLimit = 16 * 11 + 8;
-  var topLimit = -8 + 32;
-  var bottomLimit = 16 * 7;
+  var rightLimit = 230;
+  var topLimit = 0;
+  var bottomLimit = 320;
   if (x < leftLimit) {
     x = leftLimit;
   }

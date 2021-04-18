@@ -54,10 +54,10 @@ body {
 
 .map {
   image-rendering: pixelated;
-  background-image: url('https://assets.codepen.io/21542/CameraDemoMap.png');
+  background-image: url('map.png');
   background-size: 100%;
-  width: calc(13 * var(--grid-cell));
-  height: calc(10 * var(--grid-cell));
+  width: calc(16 * var(--grid-cell));
+  height: calc(24 * var(--grid-cell));
   position: relative;
 }
 
@@ -199,10 +199,10 @@ body {
 
 .block-item {
   position: relative;
-  top: 40%;
-  left: 5%;
-  width: 20%;
-  height: 20%;
+  top: 28%;
+  left: 18%;
+  width: 10%;
+  height: 5%;
   box-sizing: border-box;
   background-color: rgba(252, 249, 105, 0.4);
   border: 4px dashed #eaee1c;
