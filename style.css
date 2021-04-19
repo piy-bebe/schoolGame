@@ -1,11 +1,11 @@
 :root {
-  --pixel-size: 2px;
+  --pixel-size: 4px;
   --grid-cell: calc(var(--pixel-size) * 16);
   --bg: #9fa7e4;
 }
 @media (min-width: 700px) {
   :root {
-    --pixel-size: 3px;
+    --pixel-size: 4px;
   }
 }
 @media (min-width: 1000px) {
@@ -208,7 +208,7 @@ body {
   border: 4px dashed #eaee1c;
   z-index: -2;
 }
-.question { 
+.question {
   position: absolute;
   background-color: white;
   width: 500px;
@@ -247,4 +247,9 @@ body {
 }
 .question_active {
   display: block;
+}
+
+.wall {
+  position: absolute;
+  border: 2px solid red;
 }
