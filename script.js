@@ -1,117 +1,167 @@
-var character = document.querySelector('.character')
-var map = document.querySelector('.map')
+var character = document.querySelector(".character");
+var map = document.querySelector(".map");
 
-const block = document.querySelector('.block-item')
-const wall = document.querySelector('.wall')
+const block = document.querySelector(".block-item");
+const wall = document.querySelector(".wall");
+const wallLong = document.querySelector(".wall-long");
+
+var pixelSize = parseInt(
+  getComputedStyle(document.documentElement).getPropertyValue("--pixel-size")
+);
+var leftLimit = -8;
+var rightLimit = 230;
+var topLimit = 0;
+var bottomLimit = 320;
+
+var wallShortLeft = 85
+var wallShortRight = 140
+
 
 const objWall = {
-  background: 'red',
   props: [
-    { x: 0, y: 20, width: 385, height: 50 },
-    { x: 0, y: 350, width: 385, height: 50 },
-    { x: 0, y: 680, width: 385, height: 50 },
-    { x: 0, y: 1010, width: 385, height: 50 },
-    { x: 0, y: 1340, width: 428, height: 50 },
+    { x: 0, y: 233, width: 385, height: 50 },
+    { x: 0, y: 68, width: 385, height: 50 },
+    { x: 0, y: 150, width: 385, height: 50 },
+    { x: 0, y: 233, width: 385, height: 50 },
+    { x: 0, y: 315, width: 428, height: 50 },
+    
+    { x: 159, y: 233, width: 385, height: 50 },
+    { x: 159, y: 68, width: 385, height: 50 },
+    { x: 159, y: 150, width: 385, height: 50 },
+    { x: 159, y: 233, width: 385, height: 50 },
+    { x: 148, y: 315, width: 428, height: 50 },
+  ],
+};
 
-    { x: 635, y: 20, width: 385, height: 50 },
-    { x: 635, y: 350, width: 385, height: 50 },
-    { x: 635, y: 680, width: 385, height: 50 },
-    { x: 635, y: 1010, width: 385, height: 50 },
-    { x: 595, y: 1340, width: 428, height: 50 },
+const objLongWall = {
+  props: [
+    { x: 96, y: 278, width: 5, height: 150 },
+    { x: 96, y: 216, width: 5, height: 160 },
   ],
 }
 
+for (let i = 0; i < objLongWall.props.length; i++) {
+  const wall = document.createElement("div");
+  wall.className = "long-wall";
+  wall.style.width = objLongWall.props[i].width + "px";
+  wall.style.height = objLongWall.props[i].height + "px";
+  wall.style.transform = `translate3d( ${objLongWall.props[i].x * pixelSize}px, ${objLongWall.props[i].y * pixelSize}px, 0 )`;
+  map.appendChild(wall);
+}
+
 for (let i = 0; i < objWall.props.length; i++) {
-  console.log('created wall on map ')
-  const wall = document.createElement('div')
-  wall.className = 'wall'
-  wall.style.left = objWall.props[i].x + 'px'
-  wall.style.top = objWall.props[i].y + 'px'
-  wall.style.width = objWall.props[i].width + 'px'
-  wall.style.height = objWall.props[i].height + 'px'
-  wall.style.backgroundColor = '#f89c9c'
+  const wall = document.createElement("div");
+  wall.className = "wall";
+  // wall.style.left = objWall.props[i].x + "px";
+  // wall.style.top = objWall.props[i].y + "px";
+  wall.style.width = objWall.props[i].width + "px";
+  wall.style.height = objWall.props[i].height + "px";
+  // wall.style.backgroundColor = "#f89c9c";
+  wall.style.transform = `translate3d( ${objWall.props[i].x * pixelSize}px, ${objWall.props[i].y * pixelSize}px, 0 )`;
   // wall.style.transform = `translate3d( ${x * pixelSize}px, ${
   //   y * pixelSize
   // }px, 0 )`
-  map.appendChild(wall)
+  map.appendChild(wall);
 }
 
-const wallPositionY = 95
+const wallPositionY = 95;
 //start in the middle of the map
-var x = 112
-var y = 290
-var held_directions = [] //State of which arrow keys we are holding down
-var speed = 1.5 //How fast the character moves in pixels per frame
+var x = 112;
+var y = 290;
+var held_directions = []; //State of which arrow keys we are holding down
+var speed = 1.0; //How fast the character moves in pixels per frame
 
 const placeCharacter = () => {
-  var pixelSize = parseInt(
-    getComputedStyle(document.documentElement).getPropertyValue('--pixel-size')
-  )
+  
+  console.log(`x: ${x}, y: ${y}`)
+  
 
-  const held_direction = held_directions[0]
+  const held_direction = held_directions[0];
   if (held_direction) {
     if (held_direction === directions.right) {
-      x += speed
+      x += speed;
     }
     if (held_direction === directions.left) {
-      x -= speed
+      x -= speed;
     }
     if (held_direction === directions.down) {
-      y += speed
+      y += speed;
     }
     if (held_direction === directions.up) {
-      y -= speed
-      // for (let i = 0; i < objWall.length; i++) {}
+      y -= speed;
     }
-    character.setAttribute('facing', held_direction)
+    character.setAttribute("facing", held_direction);
   }
-  character.setAttribute('walking', held_direction ? 'true' : 'false')
+  character.setAttribute("walking", held_direction ? "true" : "false");
 
-  const characterX0 = character.getBoundingClientRect().x
-  const characterX1 = character.getBoundingClientRect().right
+  const characterX0 = character.getBoundingClientRect().x;
+  const characterX1 = character.getBoundingClientRect().right;
 
-  const characterY0 = character.getBoundingClientRect().y
-  const characterY1 = character.getBoundingClientRect().bottom
+  const characterY0 = character.getBoundingClientRect().y;
+  const characterY1 = character.getBoundingClientRect().bottom;
 
-  const blockX0 = block.getBoundingClientRect().x
-  const blockX1 = block.getBoundingClientRect().right
+  const blockX0 = block.getBoundingClientRect().x;
+  const blockX1 = block.getBoundingClientRect().right;
 
-  const blockY0 = block.getBoundingClientRect().y
-  const blockY1 = block.getBoundingClientRect().bottom
+  const blockY0 = block.getBoundingClientRect().y;
+  const blockY1 = block.getBoundingClientRect().bottom;
 
-  const question = document.querySelector('.question')
+  const question = document.querySelector(".question");
   //Limits (gives the illusion of walls)
-  var leftLimit = -8
-  var rightLimit = 230
-  var topLimit = 0
-  var bottomLimit = 320
 
-  console.log('y = ' + parseInt(y) + ' | wallPositionY = ' + wallPositionY)
+  // console.log("y = " + parseInt(y) + " | wallPositionY = " + wallPositionY);
   if (parseInt(y) >= wallPositionY && wallPositionY >= parseInt(y)) {
-    console.log('WALL')
+    console.log("WALL");
   }
   if (x < leftLimit) {
-    x = leftLimit
+    x = leftLimit;
   }
   if (x > rightLimit) {
-    x = rightLimit
+    x = rightLimit;
   }
   if (y < topLimit) {
-    y = topLimit
+    y = topLimit;
   }
   if (y > bottomLimit) {
-    y = bottomLimit
+    y = bottomLimit;
+  }
+ 
+  console.log(objWall.props[0].y + 15)
+
+  // Проверка на стены
+  for(let i = 0; i < objWall.props.length; i++) {
+    if(objWall.props[i].y + 15 == y && x <= wallShortLeft) {
+      y = objWall.props[i].y + 16
+    }
+    else if(objWall.props[i].y - 10 == y && x <= wallShortLeft) {
+      y = objWall.props[i].y - 11
+    }
+    else if(objWall.props[i].y - 10 == y && x >= wallShortRight) {
+      y = objWall.props[i].y - 11
+    }
+    else if(objWall.props[i].y + 15 == y && x >= wallShortRight) {
+      y = objWall.props[i].y + 16
+    }
   }
 
-  var camera_left = pixelSize * 66
-  var camera_top = pixelSize * 42
+  for(let i = 0; i < objLongWall.props.length; i++) {
+    if(objLongWall.props[i].x - 8 == x && (y >= objLongWall.props[i].y - 12 && objLongWall.props[i].y + 40 >= y)) {
+      x = objLongWall.props[i].x - 7
+    }
+  }
+
+  var camera_left = pixelSize * 66;
+  var camera_top = pixelSize * 42;
+
 
   map.style.transform = `translate3d( ${-x * pixelSize + camera_left}px, ${
     -y * pixelSize + camera_top
-  }px, 0 )`
+  }px, 0 )`;
   character.style.transform = `translate3d( ${x * pixelSize}px, ${
     y * pixelSize
-  }px, 0 )`
+  }px, 0 )`;
+
+
 
   if (
     characterX0 >= blockX0 - 50 &&
@@ -119,49 +169,49 @@ const placeCharacter = () => {
     characterY0 >= blockY0 - 100 &&
     characterY1 <= blockY1 + 30
   ) {
-    question.style.display = 'block'
+    question.style.display = "block";
   } else {
-    question.style.display = 'none'
+    question.style.display = "none";
   }
-}
+};
 
 //Set up the game loop
 const step = () => {
-  placeCharacter()
+  placeCharacter();
   window.requestAnimationFrame(() => {
-    step()
-  })
-}
-step() //kick off the first step!
+    step();
+  });
+};
+step(); //kick off the first step!
 
 /* Direction key state */
 const directions = {
-  up: 'up',
-  down: 'down',
-  left: 'left',
-  right: 'right',
-}
+  up: "up",
+  down: "down",
+  left: "left",
+  right: "right",
+};
 const keys = {
   38: directions.up,
   37: directions.left,
   39: directions.right,
   40: directions.down,
-}
-document.addEventListener('keydown', (e) => {
-  var dir = keys[e.which]
+};
+document.addEventListener("keydown", (e) => {
+  var dir = keys[e.which];
   if (dir && held_directions.indexOf(dir) === -1) {
-    held_directions.unshift(dir)
+    held_directions.unshift(dir);
   }
-})
+});
 
-document.addEventListener('keyup', (e) => {
-  var dir = keys[e.which]
-  var index = held_directions.indexOf(dir)
+document.addEventListener("keyup", (e) => {
+  var dir = keys[e.which];
+  var index = held_directions.indexOf(dir);
   if (index > -1) {
-    held_directions.splice(index, 1)
+    held_directions.splice(index, 1);
   }
   //   console.log("Y = ", character.getBoundingClientRect().y)
-})
+});
 
 /* BONUS! Dpad functionality for mouse and touch */
 // var isPressed = false

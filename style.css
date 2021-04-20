@@ -251,5 +251,8 @@ body {
 
 .wall {
   position: absolute;
-  border: 2px solid red;
+}
+.long-wall {
+  position: absolute;
+  background-color: red;
 }
