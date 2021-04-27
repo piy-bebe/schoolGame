@@ -12,6 +12,26 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div class="info">
+      <p class="info__text">Имя: 
+        <span class="info__username info__interface">-</span>
+      </p>
+      <p class="info__text">Группа: 
+        <span class="info__usergroup info__interface">-</span>
+      </p>
+      <p class="info__text">Очки: 
+        <span class="info__userscore info__interface">0</span>
+      </p>
+    </div>
+    <div class="auth">
+      <form class="form-auth" action="">
+        <h1>Добро пожаловать в игру</h1>
+        <input class="form-input" id="name" type="text" placeholder="Имя" required/>
+        <input class="form-input" id="surname" type="text" placeholder="Фамилия" required/>
+        <input class="form-input" id="group" type="text" placeholder="Группа" required/>
+        <button class="form-submit" type="submit">Начать</button>
+      </form>
+    </div>
     <div class="frame">
       <div class="corner_topleft"></div>
       <div class="corner_topright"></div>
@@ -90,6 +110,8 @@
         <h2 class="question__title">Вопрос #1</h2>
         <p class="question__text">На какой планете живут люди?</p>
         <input class="question__form" type="text" placeholder="Ответ" />
+        <button id="reply">Ответить</button>
+        <span class="question_result"></span>
       </div>
     </div>
     <script src="script.js"></script>

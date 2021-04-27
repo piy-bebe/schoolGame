@@ -1,3 +1,81 @@
+const questions = {
+  complexity: [
+    "easy", "medium", "hard"
+  ],
+  class1: [{
+      name: "Устный счет",
+      listQuestions: [
+        {
+          question: "2 + 2 = ?",
+          answer: "4"
+        },
+        {
+          question: "23 + 42 = ?",
+          answer: "65"
+        },
+        {
+          question: "21 * 10 = ?",
+          answer: "210"
+        }
+      ]
+  },
+  {
+    name: "Задания на логику",
+    listQuestions: [
+      {
+        question: "Что такое Абоба?",
+        answer: "4"
+      },
+      {
+        question: "23 + 42 = ?",
+        answer: "65"
+      },
+      {
+        question: "21 * 10 = ?",
+        answer: "210"
+      }
+    ]
+},
+]
+}
+
+/*     subject: [
+      "Устный счет",
+      "Текстовые задачи",
+      "Сравнение чисел",
+      "Задания на логику",
+      "Геометрическое видение"
+    ], */
+
+const questionText = document.querySelector(".question__text")
+const questionTitle = document.querySelector(".question__title")
+const reply = document.querySelector("#reply")
+const randomSubject = Math.floor(Math.random() * questions.class1.length);
+const submit = document.querySelector('.form-submit');
+const question_result = document.querySelector(".question_result");
+
+
+submit.addEventListener('click', (e) => {
+  e.preventDefault()
+  const userName = document.querySelector("#name").value;
+  const userSurname = document.querySelector("#surname").value;
+  const userGroup = document.querySelector("#group").value;
+
+
+  const spanUser = document.querySelector(".info__username")
+  spanUser.textContent = userName || "def"
+
+  const spanGroup = document.querySelector(".info__usergroup")
+  spanGroup.textContent = userGroup || "def"
+  
+  
+  const authField = document.querySelector('.auth');
+  authField.style.display = "none"
+})
+
+
+const question = document.querySelector(".question");
+
 var character = document.querySelector(".character");
 var map = document.querySelector(".map");
 
@@ -36,7 +114,14 @@ const objWall = {
 const objLongWall = {
   props: [
     { x: 96, y: 278, width: 5, height: 150 },
-    { x: 96, y: 216, width: 5, height: 160 },
+    { x: 96, y: 198, width: 5, height: 160 },
+    { x: 96, y: 112, width: 5, height: 160 },
+    { x: 96, y: 30, width: 5, height: 160 },
+
+    { x: 158, y: 278, width: 5, height: 150 },
+    { x: 158, y: 198, width: 5, height: 150 },
+    { x: 158, y: 112, width: 5, height: 150 },
+    { x: 158, y: 30, width: 5, height: 150 },
   ],
 }
 
@@ -72,9 +157,7 @@ var held_directions = []; //State of which arrow keys we are holding down
 var speed = 1.0; //How fast the character moves in pixels per frame
 
 const placeCharacter = () => {
-  
-  console.log(`x: ${x}, y: ${y}`)
-  
+   
 
   const held_direction = held_directions[0];
   if (held_direction) {
@@ -106,13 +189,9 @@ const placeCharacter = () => {
   const blockY0 = block.getBoundingClientRect().y;
   const blockY1 = block.getBoundingClientRect().bottom;
 
-  const question = document.querySelector(".question");
   //Limits (gives the illusion of walls)
 
   // console.log("y = " + parseInt(y) + " | wallPositionY = " + wallPositionY);
-  if (parseInt(y) >= wallPositionY && wallPositionY >= parseInt(y)) {
-    console.log("WALL");
-  }
   if (x < leftLimit) {
     x = leftLimit;
   }
@@ -125,8 +204,6 @@ const placeCharacter = () => {
   if (y > bottomLimit) {
     y = bottomLimit;
   }
- 
-  console.log(objWall.props[0].y + 15)
 
   // Проверка на стены
   for(let i = 0; i < objWall.props.length; i++) {
@@ -145,9 +222,14 @@ const placeCharacter = () => {
   }
 
   for(let i = 0; i < objLongWall.props.length; i++) {
-    if(objLongWall.props[i].x - 8 == x && (y >= objLongWall.props[i].y - 12 && objLongWall.props[i].y + 40 >= y)) {
+    if(objLongWall.props[i].x - 8 == x && (y >= objLongWall.props[i].y -12 && objLongWall.props[i].y + 60 >= y)) {
       x = objLongWall.props[i].x - 7
     }
+    else if(objLongWall.props[i].x - 20 == x && (y >= objLongWall.props[i].y -12 && objLongWall.props[i].y + 60 >= y)) {
+      x = objLongWall.props[i].x - 21
+    }
+
+
   }
 
   var camera_left = pixelSize * 66;
@@ -167,9 +249,22 @@ const placeCharacter = () => {
     characterX0 >= blockX0 - 50 &&
     characterX1 <= blockX1 + 50 &&
     characterY0 >= blockY0 - 100 &&
-    characterY1 <= blockY1 + 30
+    characterY1 <= blockY1 + 30 &&
+    block.classList[1] != "block-item__disabled"
+
   ) {
-    question.style.display = "block";
+    question.style.display = "block";   
+    questionTitle.textContent = questions.class1[randomSubject].name
+    questionText.textContent = questions.class1[randomSubject].listQuestions[0].question
+    reply.addEventListener('click', () => {
+      const question__form = document.querySelector(".question__form")
+      if(question__form.value == questions.class1[randomSubject].listQuestions[0].answer) {
+        question_result.textContent = "правильно"
+      } else {
+        question_result.textContent = "не правильно"
+        block.classList.add("block-item__disabled")
+      }
+    })
   } else {
     question.style.display = "none";
   }
@@ -182,9 +277,9 @@ const step = () => {
     step();
   });
 };
-step(); //kick off the first step!
-
-/* Direction key state */
+ //kick off the first step!
+   step();
+ /* Direction key state */
 const directions = {
   up: "up",
   down: "down",

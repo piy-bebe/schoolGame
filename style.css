@@ -22,6 +22,8 @@
 html,
 body {
   height: 100%;
+  font-family: Consolas;
+  
 }
 
 body {
@@ -29,6 +31,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 .pixel-art {
@@ -199,7 +202,7 @@ body {
 
 .block-item {
   position: relative;
-  top: 28%;
+  top:71%;
   left: 18%;
   width: 10%;
   height: 5%;
@@ -254,5 +257,67 @@ body {
 }
 .long-wall {
   position: absolute;
-  background-color: red;
+}
+
+.auth {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  z-index: 100;
+  top: 0;
+  left: 0;
+
+}
+.form-auth {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  height: 100%;
+}
+.form-label {
+  display: block;
+
+}
+.form-input {
+  width: 250px;
+  height: 30px;
+  font-size: 18px;
+  font-family: Consolas;
+  margin: 15px 0;
+  padding-left: 7px;
+}
+.form-submit {
+  width: 200px;
+  height: 40px;
+  background-color: #000000;
+  color: white;
+  margin-top: 20px;
+  border: 0;
+}
+.info {
+  width: 500px;
+  margin: 0 auto;
+  align-self: flex-start;
+
+  font-size: 18px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.info__text {
+  font-weight: bold;
+}
+.info__interface {
+  color: #1748ea;
+}
+.question_result {
+  display: block;
+  font-weight: bold;
+}
+.block-item__disabled {
+  background: tomato;
+  border: 4px solid red;
 }
