@@ -825,5 +825,5 @@ export const questionsList = {
         }
       ]
     }
-]
+  ]
 };

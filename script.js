@@ -205,6 +205,8 @@ let classID
 let random = ""
 // Уровень сложности
 let complexity = 1
+//Флаги
+let flag = 1
 
 submit.addEventListener("click", (e) => {
   e.preventDefault();
@@ -493,7 +495,6 @@ const placeCharacter = () => {
     y * pixelSize
   }px, 0 )`;
 
-
   if (
     characterX0 >= positionBlocks.places[0].x - 50 &&
     characterX1 <= positionBlocks.places[0].right + 50 &&
@@ -502,6 +503,7 @@ const placeCharacter = () => {
     (blocks[0].classList[1] != "block-item__success" && 
     blocks[0].classList[1] != "block-item__disabled")
   ) {
+
     id = 0
     if(random.length == "" && complexity == 1) {
       random = Math.floor(Math.random() * data.classes[classID].subject[id].complexity.easy.length)
@@ -611,6 +613,7 @@ const placeCharacter = () => {
   }
   else {
     question.style.display = "none";
+    random = ""
   }
 
   // for(let i = 0; i < positionBlocks.places.length; i++) {
@@ -658,6 +661,7 @@ document.addEventListener("keydown", (e) => {
   if (dir && held_directions.indexOf(dir) === -1) {
     held_directions.unshift(dir);
   }
+
   if(e.key === "p") {
     alert("PAUSE")
   }
@@ -673,6 +677,7 @@ document.addEventListener("keyup", (e) => {
   if (index > -1) {
     held_directions.splice(index, 1);
   }
+
   //   console.log("Y = ", character.getBoundingClientRect().y)
   if(e.key === "r") {
     const report = document.querySelector('.report')
@@ -691,113 +696,57 @@ function questionStart(rand) {
     questionText.textContent  = data.classes[classID].subject[id].complexity.medium[rand].question;
   } else if(complexity == 3) {
     questionText.textContent  = data.classes[classID].subject[id].complexity.hard[rand].question;
-  }
-}
+  } 
 
-reply.addEventListener("click", () => {
-  const question__form = document.querySelector(".question__form");
-
-  if(complexity == 1) {
-    if (
-      question__form.value ==
-      data.classes[classID].subject[id].complexity.easy[random].answer
-    ) {
-      complexity = 2
-      random = ""
-    } else {
-      blocks[id].classList.add("block-item__disabled");
-        question.style.display = "none";
-        question__form.value = ""
-        random = ""
-        complexity = 1
-      }
-    } else if(complexity == 2) {
-      if (
-        question__form.value ==
-        data.classes[classID].subject[id].complexity.medium[random].answer
-      ) {
-        complexity = 3
-        random = ""
-      } else {
-        blocks[id].classList.add("block-item__disabled");
-          question.style.display = "none";
-          question__form.value = ""
-          random = ""
-          complexity = 1
-        }
-    } else if(complexity == 3) {
-      if (
-        question__form.value ==
-        data.classes[classID].subject[id].complexity.hard[random].answer
-      ) {
-        blocks[id].classList.add("block-item__success");
-        question.style.display = "none";
-        question__form.value = ""
-        random = ""
-        complexity = 1
-      } else {
-        blocks[id].classList.add("block-item__disabled");
-          question.style.display = "none";
-          question__form.value = ""
-          random = ""
-          complexity = 1
-        }
-    }
-    
-    
-  });
+  reply.addEventListener("click", () => {
+    const question__form = document.querySelector(".question__form");
   
-  // if(stepQuestion <= 2) {
-  //   questionText.textContent =
-  //   questions.class1[randomSubject].listQuestions[stepQuestion].question;
-  //   stepQuestion++;
-  // }
-  // else {
-  //   blocks[id].classList.add("block-item__success");
-  //   question.style.display = "none";
-  //   question__form.value = ""
-  //   stepQuestion = 0
-  // }
-  // /* BONUS! Dpad functionality for mouse and touch */
-// var isPressed = false
-// const removePressedAll = () => {
-//   document.querySelectorAll('.dpad-button').forEach((d) => {
-//     d.classList.remove('pressed')
-//   })
-// }
-// document.body.addEventListener('mousedown', () => {
-//   console.log('mouse is down')
-//   isPressed = true
-// })
-// document.body.addEventListener('mouseup', () => {
-//   console.log('mouse is up')
-//   isPressed = false
-//   held_directions = []
-//   removePressedAll()
-// })
-// const handleDpadPress = (direction, click) => {
-//   if (click) {
-//     isPressed = true
-//   }
-//   held_directions = isPressed ? [direction] : []
-
-//   if (isPressed) {
-//     removePressedAll()
-//     document.querySelector('.dpad-' + direction).classList.add('pressed')
-//   }
-// }
-// //Bind a ton of events for the dpad
-// document.querySelector(".dpad-left").addEventListener("touchstart", (e) => handleDpadPress(directions.left, true));
-// document.querySelector(".dpad-up").addEventListener("touchstart", (e) => handleDpadPress(directions.up, true));
-// document.querySelector(".dpad-right").addEventListener("touchstart", (e) => handleDpadPress(directions.right, true));
-// document.querySelector(".dpad-down").addEventListener("touchstart", (e) => handleDpadPress(directions.down, true));
-
-// document.querySelector(".dpad-left").addEventListener("mousedown", (e) => handleDpadPress(directions.left, true));
-// document.querySelector(".dpad-up").addEventListener("mousedown", (e) => handleDpadPress(directions.up, true));
-// document.querySelector(".dpad-right").addEventListener("mousedown", (e) => handleDpadPress(directions.right, true));
-// document.querySelector(".dpad-down").addEventListener("mousedown", (e) => handleDpadPress(directions.down, true));
-
-// document.querySelector(".dpad-left").addEventListener("mouseover", (e) => handleDpadPress(directions.left));
-// document.querySelector(".dpad-up").addEventListener("mouseover", (e) => handleDpadPress(directions.up));
-// document.querySelector(".dpad-right").addEventListener("mouseover", (e) => handleDpadPress(directions.right));
-// document.querySelector(".dpad-down").addEventListener("mouseover", (e) => handleDpadPress(directions.down));
+    if(complexity == 1) {
+      if (
+        question__form.value ==
+        data.classes[classID].subject[id].complexity.easy[random].answer
+      ) {
+        complexity = 2
+        random = ""
+        question__form.value = ""
+      } else {
+        blocks[id].classList.add("block-item__disabled");
+          question.style.display = "none";
+          question__form.value = ""
+          random = ""
+          complexity = 1
+        }
+      } else if(complexity == 2) {
+        if (
+          question__form.value ==
+          data.classes[classID].subject[id].complexity.medium[random].answer
+        ) {
+          complexity = 3
+          random = ""
+        } else {
+          blocks[id].classList.add("block-item__disabled");
+            question.style.display = "none";
+            question__form.value = ""
+            random = ""
+            complexity = 1
+          }
+      } else if(complexity == 3) {
+        if (
+          question__form.value ==
+          data.classes[classID].subject[id].complexity.hard[random].answer
+        ) {
+          blocks[id].classList.add("block-item__success");
+          question.style.display = "none";
+          question__form.value = ""
+          random = ""
+          complexity = 1
+        } else {
+          blocks[id].classList.add("block-item__disabled");
+            question.style.display = "none";
+            question__form.value = ""
+            random = ""
+            complexity = 1
+          }
+      }
+    });
+}
