@@ -16,21 +16,35 @@
       <p class="info__text">Имя: 
         <span class="info__username info__interface">-</span>
       </p>
-      <p class="info__text">Группа: 
-        <span class="info__usergroup info__interface">-</span>
-      </p>
-      <p class="info__text">Очки: 
-        <span class="info__userscore info__interface">0</span>
+      <p class="info__text">Класс: 
+        <span class="info__userclass info__interface">-</span>
       </p>
     </div>
     <div class="auth">
       <form class="form-auth" action="">
         <h1>Добро пожаловать в игру</h1>
-        <input class="form-input" id="name" type="text" placeholder="Имя" required/>
-        <input class="form-input" id="surname" type="text" placeholder="Фамилия" required/>
-        <input class="form-input" id="group" type="text" placeholder="Группа" required/>
+        <input class="form-input" id="name" type="text" value="1" placeholder="Имя" required/>
+        <input class="form-input" id="surname" type="text" value="1" placeholder="Фамилия" required/>
+        <input class="form-input" id="patronymic" type="text" value="1" placeholder="Отчество" required/>
+        <input class="form-input" id="phone" type="text" value="1" placeholder="Номер телефона" required/>
+        <input class="form-input" id="date" type="text" value="1" placeholder="Дата рождения" required/>
+        <input class="form-input" id="class" type="text" placeholder="Класс" required/>
+        <input class="form-input" id="email" type="text" value="1" placeholder="Почта" required/>
         <button class="form-submit" type="submit">Начать</button>
       </form>
+    </div>
+    <div class="report">
+      <div class="report__header">
+        <h2 class="report__title">Отчет</h2>
+      </div>
+      <div class="report__info">
+        <p class="report__surname report__all-info">Фамилия: <span class="report__span-surname"></span></p>
+        <p class="report__name report__all-info">Имя: <span class="report__span-name"></span></p>
+        <p class="report__patronymic report__all-info">Отчество: <span class="report__span-patronymic"></span></p>
+        <p class="report__phone report__all-info">Телефон: <span class="report__span-phone"></span></p>
+        <p class="report__date report__all-info">Дата рождения: <span class="report__span-date"></span></p>
+        <p class="report__class report__all-info">Класс: <span class="report__span-class"></span></p>
+      </div>
     </div>
     <div class="frame">
       <div class="corner_topleft"></div>
@@ -44,7 +58,7 @@
             <div class="shadow pixel-art"></div>
             <div class="character_spritesheet pixel-art"></div>
           </div>
-          <div class="block-item"></div>
+          <!-- <div class="block-item"></div> -->
         </div>
 
         <!-- <div class="dpad">
@@ -114,6 +128,61 @@
         <span class="question_result"></span>
       </div>
     </div>
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
   </body>
 </html>
+
+<!-- // if(stepQuestion <= 2) {
+  //   questionText.textContent =
+  //   questions.class1[randomSubject].listQuestions[stepQuestion].question;
+  //   stepQuestion++;
+  // }
+  // else {
+  //   blocks[id].classList.add("block-item__success");
+  //   question.style.display = "none";
+  //   question__form.value = ""
+  //   stepQuestion = 0
+  // }
+  // /* BONUS! Dpad functionality for mouse and touch */
+// var isPressed = false
+// const removePressedAll = () => {
+//   document.querySelectorAll('.dpad-button').forEach((d) => {
+//     d.classList.remove('pressed')
+//   })
+// }
+// document.body.addEventListener('mousedown', () => {
+//   console.log('mouse is down')
+//   isPressed = true
+// })
+// document.body.addEventListener('mouseup', () => {
+//   console.log('mouse is up')
+//   isPressed = false
+//   held_directions = []
+//   removePressedAll()
+// })
+// const handleDpadPress = (direction, click) => {
+//   if (click) {
+//     isPressed = true
+//   }
+//   held_directions = isPressed ? [direction] : []
+
+//   if (isPressed) {
+//     removePressedAll()
+//     document.querySelector('.dpad-' + direction).classList.add('pressed')
+//   }
+// }
+// //Bind a ton of events for the dpad
+// document.querySelector(".dpad-left").addEventListener("touchstart", (e) => handleDpadPress(directions.left, true));
+// document.querySelector(".dpad-up").addEventListener("touchstart", (e) => handleDpadPress(directions.up, true));
+// document.querySelector(".dpad-right").addEventListener("touchstart", (e) => handleDpadPress(directions.right, true));
+// document.querySelector(".dpad-down").addEventListener("touchstart", (e) => handleDpadPress(directions.down, true));
+
+// document.querySelector(".dpad-left").addEventListener("mousedown", (e) => handleDpadPress(directions.left, true));
+// document.querySelector(".dpad-up").addEventListener("mousedown", (e) => handleDpadPress(directions.up, true));
+// document.querySelector(".dpad-right").addEventListener("mousedown", (e) => handleDpadPress(directions.right, true));
+// document.querySelector(".dpad-down").addEventListener("mousedown", (e) => handleDpadPress(directions.down, true));
+
+// document.querySelector(".dpad-left").addEventListener("mouseover", (e) => handleDpadPress(directions.left));
+// document.querySelector(".dpad-up").addEventListener("mouseover", (e) => handleDpadPress(directions.up));
+// document.querySelector(".dpad-right").addEventListener("mouseover", (e) => handleDpadPress(directions.right));
+// document.querySelector(".dpad-down").addEventListener("mouseover", (e) => handleDpadPress(directions.down)); -->
